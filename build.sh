@@ -2,6 +2,6 @@
 export USE_CCACHE=1
 export USE_PREBUILT_CHROMIUM=1
 
-lunch cm_"$1"-userdebug
+breakfast $1
 time mka bacon
 

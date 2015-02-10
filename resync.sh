@@ -1,6 +1,6 @@
 root="$PWD"
-patches=(
-    'build chromium_build.patch'
+patch_list=(
+    'build chromium_build.patch 4.8_build.patch'
     'vendor/cm chromium_vendor_cm.patch'
     'frameworks/webview chromium_frameworks_webview.patch'
 )
@@ -8,15 +8,17 @@ patches=(
 function patch {
     count=0
 
-    while [ "x${patches[count]}" != "x" ]; do
-        curr="${patches[count]}"
-        patch=`echo "$curr" | awk '{print $2}'`
+    while [ "x${patch_list[count]}" != "x" ]; do
+        curr="${patch_list[count]}"
+        patches=`echo "$curr" | cut -d " " -f2-`
         folder=`echo "$curr" | awk '{print $1}'`
 
         cd "$folder"
 
         if [ "$1" = "apply" ]; then
-            git am "$root/$patch"
+            for patch in $patches; do
+                git am "$root/patches/$patch"
+            done
         elif [ "$1" = "reset" ]; then
             git reset --hard github/cm-11.0
         fi

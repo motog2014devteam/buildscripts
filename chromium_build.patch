@@ -1,0 +1,97 @@
+From ed5fd5d694fdff8f6238ee1ae444431212587cd7 Mon Sep 17 00:00:00 2001
+From: Jiangyi <sam.andrew.jiang@gmail.com>
+Date: Fri, 18 Jul 2014 15:53:13 -0400
+Subject: [PATCH] build: Add chromium prebuilt support to envsetup.sh && The
+ core Makefile
+
+This adds a chromium_prebuilt function to envsetup.sh that is invoked by lunch to check
+whether the chromium prebuilts are up-to-date or not. If not, it will be built from source
+and then the new source built version will be pulled during brunch/mka bacon to become the
+new prebuilts for future builds.
+
+This is all opt-in through the USE_PREBUILT_CHROMIUM flag. Without it being set to 1,
+none of this would be ran, and regular operations will go on.
+
+PS13:
+-use export TARGET_DEVICE
+-replace git -C with params compatible to old git versions
+
+(vendor repository for script)
+
+Adapted to AOGP build system by k2wl
+
+Change-Id: I40f8c8dbd2a8a84a5c1b9f47ee04180a71ef4e07
+
+Conflicts:
+	core/Makefile
+	envsetup.sh
+---
+ core/Makefile |  7 +++++++
+ envsetup.sh   | 22 ++++++++++++++++++++++
+ 2 files changed, 29 insertions(+)
+
+diff --git a/core/Makefile b/core/Makefile
+index 312a3c1..790952a 100644
+--- a/core/Makefile
++++ b/core/Makefile
+@@ -1504,6 +1504,13 @@ $(INTERNAL_OTA_PACKAGE_TARGET): $(BUILT_TARGET_FILES_PACKAGE) $(DISTTOOLS)
+ 
+ CM_TARGET_PACKAGE := $(PRODUCT_OUT)/cm-$(CM_VERSION).zip
+ 
++ifeq ($(USE_PREBUILT_CHROMIUM),1)
++ifneq ($(PRODUCT_PREBUILT_WEBVIEWCHROMIUM),yes)
++	@echo "Running Chromium prebuilt setup script..."
++	$(hide) . $(TOPDIR)vendor/cm/chromium_prebuilt.sh $(TOP)
++endif
++endif
++
+ .PHONY: otapackage bacon
+ otapackage: $(INTERNAL_OTA_PACKAGE_TARGET)
+ bacon: otapackage
+diff --git a/envsetup.sh b/envsetup.sh
+index c756c35..b3a5508 100644
+--- a/envsetup.sh
++++ b/envsetup.sh
+@@ -618,10 +618,18 @@ function lunch()
+ 
+     echo
+ 
++    if [[ $USE_PREBUILT_CHROMIUM -eq 1 ]]; then
++        chromium_prebuilt
++    else
++        # Unset flag in case user opts out later on
++        export PRODUCT_PREBUILT_WEBVIEWCHROMIUM=""
++    fi
++
+     fixup_common_out_dir
+ 
+     set_stuff_for_environment
+     printconfig
++
+ }
+ 
+ # Tab completion for lunch.
+@@ -2158,6 +2166,20 @@ function pez {
+     return $retval
+ }
+ 
++function chromium_prebuilt() {
++    T=$(gettop)
++    export TARGET_DEVICE=$(get_build_var TARGET_DEVICE)
++    hash=$T/prebuilts/chromium/$TARGET_DEVICE/hash.txt
++
++    if [ -r $hash ] && [ $(git --git-dir=$T/external/chromium/.git --work-tree=$T/external/chromium rev-parse --verify HEAD) == $(cat $hash) ]; then
++        export PRODUCT_PREBUILT_WEBVIEWCHROMIUM=yes
++        echo "** Prebuilt Chromium is up-to-date; Will be used for build **"
++    else
++        export PRODUCT_PREBUILT_WEBVIEWCHROMIUM=no
++        echo "** Prebuilt Chromium out-of-date/not found; Will build from source **"
++    fi
++}
++
+ if [ "x$SHELL" != "x/bin/bash" ]; then
+     case `ps -o command -p $$` in
+         *bash*)
+-- 
+2.1.4
+

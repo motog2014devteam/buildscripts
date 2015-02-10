@@ -1,0 +1,37 @@
+From b0814cb80b6a6a8d8f1a3498d62a5c0fd8a0ad5b Mon Sep 17 00:00:00 2001
+From: Jiangyi <sam.andrew.jiang@gmail.com>
+Date: Fri, 18 Jul 2014 10:50:52 -0400
+Subject: [PATCH] frameworks/webview: Use prebuilt java library for building if
+ using prebuilt Chromium
+
+webviewchromium requires android_java_webview for building, but if prebuilt Chromium is
+used, android_java_webview does not get built. Therefore, in this case, get webviewchromium
+to rely on a prebuilt android_java_webview jar in order to not break build.
+
+Change-Id: I60f8f0fc7d63eb16b90ddce03690782b1b2f3026
+---
+ chromium/Android.mk | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
+
+diff --git a/chromium/Android.mk b/chromium/Android.mk
+index d715221..bdcfaa3 100644
+--- a/chromium/Android.mk
++++ b/chromium/Android.mk
+@@ -114,7 +114,13 @@ $(jar_check_ok): $(full_classes_jarjar_jar) $(LOCAL_PATH)/tools/jar_check.py $(L
+ $(LOCAL_BUILT_MODULE): $(jar_check_ok)
+ endif
+ 
+-
++# Use prebuilt android_webview_java to satisfy webviewchromium's dependency
++# if we are working with prebuilt Chromium
++ifeq ($(PRODUCT_PREBUILT_WEBVIEWCHROMIUM),yes)
++include $(CLEAR_VARS)
++LOCAL_PREBUILT_STATIC_JAVA_LIBRARIES := android_webview_java:../../../prebuilts/chromium/$(TARGET_DEVICE)/android_webview_java.jar
++include $(BUILD_MULTI_PREBUILT)
++endif
+ 
+ # Native support library (libwebviewchromium_plat_support.so) - does NOT link
+ # any native chromium code.
+-- 
+2.1.4
+

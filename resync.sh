@@ -31,7 +31,7 @@ function patch {
 
 patch reset
 
-#repo sync -f -j12
-#vendor/cm/get-prebuilts
+repo sync -f -j12
+vendor/cm/get-prebuilts
 
 patch apply

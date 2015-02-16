@@ -86,7 +86,7 @@ breakfast $1
 
 echo ${bldblu}"Starting compilation"${txtrst}
 echo ""
-make bacon
+mka bacon
 
 # Finished! Get elapsed time
 t2=`date +%s`

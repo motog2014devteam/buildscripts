@@ -1,0 +1,38 @@
+From f1324b6bb372e60e49b5e1ebd832f5064e92622b Mon Sep 17 00:00:00 2001
+From: LuK1337 <priv.luk@gmail.com>
+Date: Wed, 17 Apr 2013 16:02:13 -0600
+Subject: [PATCH] Fix build with GCC 4.8
+
+Remove undefined reference error
+
+Change-Id: I5c8fe71317b7f63171fc4f718ca6fd9e435a23a8
+---
+ lib/sh/unicode.c | 12 ------------
+ 1 file changed, 12 deletions(-)
+
+diff --git a/lib/sh/unicode.c b/lib/sh/unicode.c
+index 9ee7147..0046d86 100644
+--- a/lib/sh/unicode.c
++++ b/lib/sh/unicode.c
+@@ -251,18 +251,6 @@ u32cconv (c, s)
+   size_t sn;
+ #endif
+ 
+-#if __STDC_ISO_10646__
+-  wc = c;
+-  if (sizeof (wchar_t) == 4 && c <= 0x7fffffff)
+-    n = wctomb (s, wc);
+-  else if (sizeof (wchar_t) == 2 && c <= 0x10ffff && u32toutf16 (c, ws))
+-    n = wcstombs (s, ws, MB_LEN_MAX);
+-  else
+-    n = -1;
+-  if (n != -1)
+-    return n;
+-#endif
+-
+ #if HAVE_NL_LANGINFO
+   codeset = nl_langinfo (CODESET);
+   if (STREQ (codeset, "UTF-8"))
+-- 
+2.1.4
+

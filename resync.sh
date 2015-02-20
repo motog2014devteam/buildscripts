@@ -1,6 +1,6 @@
 root="$PWD"
 patch_list=(
-    'build chromium_build.patch 4.8_build.patch'
+    'build chromium_build.patch archi_build.patch'
     'art 4.8_art.patch'
     'vendor/cm chromium_vendor_cm.patch'
     'frameworks/webview chromium_frameworks_webview.patch'

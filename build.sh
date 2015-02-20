@@ -26,10 +26,10 @@ usage()
     echo "  build.sh [options] device"
     echo ""
     echo ${txtbld}"  Options:"${txtrst}
-    echo "    -c#$ Cleaning options before build:"
+    echo "    -c# Cleaning options before build:"
     echo "        1 - Run make clobber"
     echo "        2 - Run rm -rf out/target"
-    echo "    -s$  Sync source before build"
+    echo "    -s  Sync source before build"
     echo ""
     echo ${txtbld}"  Example:"${txtrst}
     echo "    ./build.sh -c1 titan"

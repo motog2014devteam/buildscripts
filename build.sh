@@ -68,6 +68,7 @@ if [ "$opt_clean" -eq 1 ]; then
 elif [ "$opt_clean" -eq 2 ]; then
     echo ${bldblu}"Running 'rm -rf out/target'"${txtrst}
     rm -rf out/target
+    echo
 elif [ ! "$opt_clean" -eq 0 ]; then
     usage
 fi

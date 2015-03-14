@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # Colors
 red=$(tput setaf 1)             #  red
 grn=$(tput setaf 2)             #  green

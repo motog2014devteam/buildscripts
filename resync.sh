@@ -1,3 +1,5 @@
+#!/bin/bash
+
 root="$PWD"
 patch_list=(
     'build chromium_build.patch'

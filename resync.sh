@@ -19,7 +19,7 @@ function patch {
 
         if [ "$1" = "apply" ]; then
             for patch in $patches; do
-                git am "$root/patches/$patch"
+                git am "$root/buildscripts/patches/$patch"
             done
         elif [ "$1" = "reset" ]; then
             git reset --hard github/cm-12.1

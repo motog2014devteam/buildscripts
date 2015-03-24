@@ -22,7 +22,7 @@ function patch {
                 git am "$root/patches/$patch"
             done
         elif [ "$1" = "reset" ]; then
-            git reset --hard github/cm-12.0
+            git reset --hard github/cm-12.1
         fi
 
         cd "$root"

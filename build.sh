@@ -77,9 +77,6 @@ fi
 
 device="$1"
 
-# Get time of startup
-t1=`date +%s`
-
 echo ${bldblu}"Setting up environment"${txtrst}
 . build/envsetup.sh
 
@@ -90,11 +87,3 @@ breakfast $1
 echo ${bldblu}"Starting compilation"${txtrst}
 echo ""
 mka bacon
-
-# Finished! Get elapsed time
-t2=`date +%s`
-
-tmin=$(( (t2-t1)/60 ))
-tsec=$(( (t2-t1)%60 ))
-
-echo ${bldgrn}"Total time elapsed:${txtrst} ${grn}$tmin minutes $tsec seconds"${txtrst}

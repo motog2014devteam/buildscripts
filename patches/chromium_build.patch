@@ -1,4 +1,4 @@
-From 01dac06f5a807ab858912dced9f4ee134b16e648 Mon Sep 17 00:00:00 2001
+From e8f987d088f1a67d21d72d6dcbb97cce792881b8 Mon Sep 17 00:00:00 2001
 From: Jiangyi <sam.andrew.jiang@gmail.com>
 Date: Fri, 18 Jul 2014 15:53:13 -0400
 Subject: [PATCH] build: Add chromium prebuilt support to envsetup.sh && The
@@ -23,12 +23,12 @@ Change-Id: I40f8c8dbd2a8a84a5c1b9f47ee04180a71ef4e07
  2 files changed, 26 insertions(+)
 
 diff --git a/core/Makefile b/core/Makefile
-index ce5dd51..9860511 100644
+index 7b25927..84caf1f 100644
 --- a/core/Makefile
 +++ b/core/Makefile
-@@ -1706,6 +1706,13 @@ bacon: otapackage
- 	$(hide) $(MD5SUM) $(CM_TARGET_PACKAGE) > $(CM_TARGET_PACKAGE).md5sum
- 	@echo -e ${CL_CYN}"Package Complete: $(CM_TARGET_PACKAGE)"${CL_RST}
+@@ -1735,6 +1735,13 @@ $(INTERNAL_FACTORY_PACKAGE_TARGET): $(BUILT_TARGET_FILES_PACKAGE) $(DISTTOOLS)
+ .PHONY: factorypackage
+ factorypackage: $(INTERNAL_FACTORY_PACKAGE_TARGET)
  
 +ifeq ($(USE_PREBUILT_CHROMIUM),1)
 +ifneq ($(PRODUCT_PREBUILT_WEBVIEWCHROMIUM),yes)
@@ -41,7 +41,7 @@ index ce5dd51..9860511 100644
  endif    # TARGET_NO_KERNEL != true
  endif    # TARGET_DEVICE != generic*
 diff --git a/envsetup.sh b/envsetup.sh
-index 21702a3..9a4df22 100644
+index ffd130a..2507aa1 100644
 --- a/envsetup.sh
 +++ b/envsetup.sh
 @@ -644,6 +644,13 @@ function lunch()

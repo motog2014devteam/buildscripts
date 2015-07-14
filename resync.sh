@@ -5,6 +5,7 @@ patch_list=(
     'build chromium_build.patch'
     'vendor/cm chromium_vendor_cm.patch'
     'frameworks/webview chromium_frameworks_webview.patch'
+    'frameworks/base navsize_frameworks_base.patch'
 )
 
 function patch {

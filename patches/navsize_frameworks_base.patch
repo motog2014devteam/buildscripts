@@ -1,0 +1,29 @@
+From 3714dca2b5fb17b82bfd4097d2e51a41a420e6a9 Mon Sep 17 00:00:00 2001
+From: LuK1337 <priv.luk@gmail.com>
+Date: Tue, 14 Jul 2015 16:18:07 +0200
+Subject: [PATCH] core: Change nav height/width to 36dp
+
+Change-Id: I835ff171d52f51be543b4fbbe3e8468b5a1993bc
+---
+ core/res/res/values/dimens.xml | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/core/res/res/values/dimens.xml b/core/res/res/values/dimens.xml
+index b90406a..f6b9f43 100644
+--- a/core/res/res/values/dimens.xml
++++ b/core/res/res/values/dimens.xml
+@@ -33,9 +33,9 @@
+     <!-- Height of the status bar -->
+     <dimen name="status_bar_height">25dip</dimen>
+     <!-- Height of the bottom navigation / system bar. -->
+-    <dimen name="navigation_bar_height">48dp</dimen>
++    <dimen name="navigation_bar_height">36dp</dimen>
+     <!-- Height of the bottom navigation bar in portrait; often the same as @dimen/navigation_bar_height -->
+-    <dimen name="navigation_bar_height_landscape">48dp</dimen>
++    <dimen name="navigation_bar_height_landscape">36dp</dimen>
+     <!-- Width of the navigation bar when it is placed vertically on the screen -->
+     <dimen name="navigation_bar_width">42dp</dimen>
+     <!-- Height of notification icons in the status bar -->
+-- 
+2.1.4
+

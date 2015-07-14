@@ -33,6 +33,6 @@ function patch {
 
 patch reset
 
-repo sync -f -j4
+repo sync -f -j8
 
 patch apply
